@@ -4,16 +4,12 @@ import SiteFooter from '@/components/footer';
 
 export default function Home() {
   return (
-    <main className="flex min-h-svh flex-col items-center justify-center p-4 overflow-hidden">
+    <main className="relative flex min-h-svh flex-col items-center justify-center p-4 pb-24 overflow-hidden">
       <WaveBackground />
-      <div className="z-10">
+      <div className="z-10 w-full max-w-7xl">
         <CambioPlusApp />
       </div>
-
-      <div className='mt-8'>
-        <SiteFooter />
-      </div>
-      
+      <SiteFooter/>
     </main>
   );
 }
