@@ -1,5 +1,6 @@
 import { CambioPlusApp } from '@/components/cambio-plus-app';
 import { WaveBackground } from '@/components/wavy-background';
+import SiteFooter from '@/components/footer';
 
 export default function Home() {
   return (
@@ -8,6 +9,11 @@ export default function Home() {
       <div className="z-10">
         <CambioPlusApp />
       </div>
+
+      <div className='mt-8'>
+        <SiteFooter />
+      </div>
+      
     </main>
   );
 }
