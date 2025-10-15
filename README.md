@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cambio+ — Conversor de Moedas em Tempo Real
 
-## Getting Started
+![Screenshot](assets/screenshot.png)
 
-First, run the development server:
+> **Stack:** React + Next.js • Tailwind CSS • Chart.js (ou Recharts) • Fetch/SSR • Vercel Ready
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+O **Cambio+** é um conversor de moedas com foco em **UX moderna** e **tempo real**, incluindo histórico gráfico e suporte a múltiplos pares utilizando a API pública da AwesomeAPI.
+
+---
+
+## ✨ Funcionalidades
+
+- Conversão em tempo real entre pares de moedas (ex.: **BRL ⇄ USD**).
+- Campo de valor com **formatação amigável** e troca rápida entre moedas.
+- **Gráfico de histórico** (últimos dias) do par selecionado.
+- UI responsiva (Mobile‑First) com **animações suaves** (hover, transições, skeletons).
+- Atualização periódica das cotações (intervalo configurável).
+- Pronto para **deploy na Vercel**.
+
+---
+
+## 🧱 Tecnologias
+
+- **Next.js** (App Router ou Pages, SSR/SSG conforme necessidade).
+- **React** (Hooks, Context opcional para estado global).
+- **Tailwind CSS** (design tokens e dark mode).
+- **Charting**: `chart.js` + `react-chartjs-2` _ou_ `recharts`.
+- **TypeScript** (recomendado).
+
+---
+
+## 🔌 API de Cotações
+
+Usamos a AwesomeAPI:
+
+```
+https://economia.awesomeapi.com.br/json/last/{PAR}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Exemplos de pares:
+```
+USD-BRL  | Dólar Americano/Real Brasileiro
+USD-BRLT | Dólar Americano/Real Brasileiro Turismo
+CAD-BRL  | Dólar Canadense/Real Brasileiro
+EUR-BRL  | Euro/Real Brasileiro
+GBP-BRL  | Libra Esterlina/Real Brasileiro
+ARS-BRL  | Peso Argentino/Real Brasileiro
+BTC-BRL  | Bitcoin/Real Brasileiro
+LTC-BRL  | Litecoin/Real Brasileiro
+JPY-BRL  | Iene Japonês/Real Brasileiro
+CHF-BRL  | Franco Suíço/Real Brasileiro
+AUD-BRL  | Dólar Australiano/Real Brasileiro
+```
+> Dica: normalizamos a resposta para sempre retornar **valor de compra/venda**, timestamp e símbolo.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🙌 Agradecimentos
 
-## Learn More
+- [AwesomeAPI](https://docs.awesomeapi.com.br/api-de-moedas) por fornecer as cotações públicas.
+- Comunidade Next.js/Tailwind.
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

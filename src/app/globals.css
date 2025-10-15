@@ -1,26 +1,76 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 220 15% 12%;
+    --foreground: 210 20% 88%;
+    --card: 220 15% 15%;
+    --card-foreground: 210 20% 88%;
+    --popover: 220 15% 10%;
+    --popover-foreground: 210 20% 88%;
+    --primary: 178 70% 60%;
+    --primary-foreground: 220 15% 10%;
+    --secondary: 220 15% 25%;
+    --secondary-foreground: 210 20% 95%;
+    --muted: 220 15% 25%;
+    --muted-foreground: 210 20% 65%;
+    --accent: 270 80% 75%;
+    --accent-foreground: 220 15% 10%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 15% 25%;
+    --input: 220 15% 20%;
+    --ring: 178 70% 60%;
+    --radius: 0.75rem;
+
+    --chart-1: 178 70% 60%;
+    --chart-2: 270 80% 75%;
+    --chart-3: 130 70% 55%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    --positive: 130 70% 55%;
+    --negative: 0 80% 60%;
+    
+    --ease-in: cubic-bezier(0.32, 0, 0.67, 0);
+    --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+ 
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 178 60% 45%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 270 70% 65%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 178 60% 45%;
+
+    --positive: 130 60% 45%;
+    --negative: 0 80% 55%;
   }
 }
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
 }
