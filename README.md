@@ -1,7 +1,5 @@
 # Cambio+ — Conversor de Moedas em Tempo Real
 
-![Screenshot](assets/screenshot.png)
-
 > **Stack:** React + Next.js • Tailwind CSS • Chart.js (ou Recharts) • Fetch/SSR • Vercel Ready
 
 O **Cambio+** é um conversor de moedas com foco em **UX moderna** e **tempo real**, incluindo histórico gráfico e suporte a múltiplos pares utilizando a API pública da AwesomeAPI.
