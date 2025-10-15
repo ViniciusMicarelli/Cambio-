@@ -1,50 +1,167 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
-export function WavyBackground() {
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  duration: number;
+  delay: number;
+}
+
+export function WaveBackground() {
+  const [particles, setParticles] = useState<Particle[]>([]);
+
+  useEffect(() => {
+    const newParticles = Array.from({ length: 40 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 8 + 2,
+      duration: Math.random() * 12 + 8,
+      delay: Math.random() * 3,
+    }));
+    setParticles(newParticles);
+  }, []);
+
   return (
-    <div className="absolute inset-0 overflow-hidden bg-background -z-10">
-      <motion.svg
-        className="absolute bottom-0 left-0 w-full h-auto"
-        viewBox="0 0 1440 320"
-        xmlns="http://www.w3.org/2000/svg"
-        style={{ transform: "scaleY(-1)" }}
-      >
-        <motion.path
-          fill="hsl(var(--primary) / 0.1)"
-          fillOpacity="1"
-          d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,133.3C672,117,768,139,864,165.3C960,192,1056,224,1152,218.7C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+    <div className="absolute inset-0 overflow-hidden -z-10">
+      {/* Animated background gradient */}
+      <motion.div
+        className="absolute inset-0"
+        animate={{
+          background: [
+            'radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 119, 168, 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 20%, rgba(138, 180, 248, 0.15) 0%, transparent 50%)',
+            'radial-gradient(circle at 80% 50%, rgba(138, 180, 248, 0.15) 0%, transparent 50%), radial-gradient(circle at 20% 20%, rgba(255, 119, 168, 0.15) 0%, transparent 50%), radial-gradient(circle at 60% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 50%)',
+            'radial-gradient(circle at 50% 80%, rgba(255, 119, 168, 0.15) 0%, transparent 50%), radial-gradient(circle at 30% 30%, rgba(120, 119, 198, 0.15) 0%, transparent 50%), radial-gradient(circle at 70% 50%, rgba(138, 180, 248, 0.15) 0%, transparent 50%)',
+            'radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 119, 168, 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 20%, rgba(138, 180, 248, 0.15) 0%, transparent 50%)',
+          ],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
+
+      {/* Floating particles */}
+      {particles.map((particle) => (
+        <motion.div
+          key={particle.id}
+          className="absolute rounded-full bg-white/30 backdrop-blur-sm"
+          style={{
+            width: particle.size,
+            height: particle.size,
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+          }}
           animate={{
-            d: [
-              "M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,133.3C672,117,768,139,864,165.3C960,192,1056,224,1152,218.7C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z",
-              "M0,224L48,202.7C96,181,192,139,288,149.3C384,160,480,224,576,218.7C672,213,768,139,864,128C960,117,1056,171,1152,197.3C1248,224,1344,224,1392,224L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z",
-              "M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,133.3C672,117,768,139,864,165.3C960,192,1056,224,1152,218.7C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-            ]
+            y: [0, -150, 0],
+            x: [0, Math.sin(particle.id) * 80, 0],
+            opacity: [0.2, 1, 0.2],
+            scale: [1, 2, 1],
           }}
-          transition={{ duration: 15, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          transition={{
+            duration: particle.duration,
+            repeat: Infinity,
+            delay: particle.delay,
+            ease: 'easeInOut',
+          }}
         />
-      </motion.svg>
-      <motion.svg
-        className="absolute top-0 left-0 w-full h-auto"
-        viewBox="0 0 1440 320"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      ))}
+
+      {/* Pulsating Circles */}
+      <div className="absolute top-1/4 left-1/4">
+        {[0, 1, 2].map((i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full border-2 border-purple-400/20"
+            style={{
+              width: 100,
+              height: 100,
+              left: -50,
+              top: -50,
+            }}
+            animate={{
+              scale: [1, 3, 1],
+              opacity: [0.5, 0, 0.5],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              delay: i * 2,
+              ease: 'easeOut',
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="absolute bottom-1/3 right-1/4">
+        {[0, 1, 2].map((i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full border-2 border-blue-400/20"
+            style={{
+              width: 80,
+              height: 80,
+              left: -40,
+              top: -40,
+            }}
+            animate={{
+              scale: [1, 2.5, 1],
+              opacity: [0.4, 0, 0.4],
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              delay: i * 1.7,
+              ease: 'easeOut',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Energy lines */}
+      <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
         <motion.path
-          fill="hsl(var(--accent) / 0.1)"
-          fillOpacity="1"
-          d="M0,96L48,112C96,128,192,160,288,176C384,192,480,192,576,181.3C672,171,768,149,864,122.7C960,96,1056,64,1152,53.3C1248,43,1344,53,1392,58.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-           animate={{
-            d: [
-              "M0,96L48,112C96,128,192,160,288,176C384,192,480,192,576,181.3C672,171,768,149,864,122.7C960,96,1056,64,1152,53.3C1248,43,1344,53,1392,58.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z",
-              "M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,218.7C960,245,1056,235,1152,202.7C1248,171,1344,117,1392,90.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z",
-              "M0,96L48,112C96,128,192,160,288,176C384,192,480,192,576,181.3C672,171,768,149,864,122.7C960,96,1056,64,1152,53.3C1248,43,1344,53,1392,58.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-            ]
+          d="M 0,200 Q 200,100 400,200 T 800,200"
+          stroke="rgba(138, 180, 248, 0.2)"
+          strokeWidth="2"
+          fill="none"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ 
+            pathLength: [0, 1, 0],
+            opacity: [0, 0.6, 0]
           }}
-          transition={{ duration: 18, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
         />
-      </motion.svg>
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+        <motion.path
+          d="M 1440,300 Q 1200,200 1000,300 T 600,300"
+          stroke="rgba(255, 119, 168, 0.2)"
+          strokeWidth="2"
+          fill="none"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ 
+            pathLength: [0, 1, 0],
+            opacity: [0, 0.6, 0]
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: 2,
+          }}
+        />
+      </svg>
+
+      <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-transparent to-background/80"></div>
     </div>
   );
 }
