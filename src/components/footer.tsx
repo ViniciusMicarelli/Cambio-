@@ -7,23 +7,50 @@ import { Github, Linkedin } from 'lucide-react';
 export default function SiteFooter() {
   const [isVisible, setIsVisible] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [hasScrollbar, setHasScrollbar] = useState(false);
   const footerRef = useRef(null);
 
   useEffect(() => {
+    // Verifica se a página tem scroll (conteúdo maior que a tela)
+    const checkScrollbar = () => {
+      const hasScroll = document.documentElement.scrollHeight > window.innerHeight;
+      setHasScrollbar(hasScroll);
+      
+      // Se não tem scrollbar, mostra direto
+      if (!hasScroll) {
+        setIsVisible(true);
+      }
+    };
+
+    // Verifica inicialmente e quando a tela é redimensionada
+    checkScrollbar();
+    window.addEventListener('resize', checkScrollbar);
+
+    // Detecta quando o usuário faz scroll
     const handleScroll = () => {
       if (window.scrollY > 100) {
         setHasScrolled(true);
       } else {
+        // Reseta quando voltar para o topo
         setHasScrolled(false);
         setIsVisible(false);
       }
     };
 
+    // Observer para quando o footer realmente aparecer
     const observer = new IntersectionObserver(
       ([entry]) => {
+        // Se não tem scrollbar, já está visível
+        if (!hasScrollbar) {
+          setIsVisible(true);
+          return;
+        }
+
+        // Só anima se já tiver scrollado E o footer estiver visível
         if (entry.isIntersecting && hasScrolled) {
           setIsVisible(true);
         } else if (!entry.isIntersecting) {
+          // Reseta quando o footer sair da viewport
           setIsVisible(false);
         }
       },
@@ -41,11 +68,12 @@ export default function SiteFooter() {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', checkScrollbar);
       if (footerRef.current) {
         observer.unobserve(footerRef.current);
       }
     };
-  }, [hasScrolled]);
+  }, [hasScrolled, hasScrollbar]);
 
   return (
     <footer 
